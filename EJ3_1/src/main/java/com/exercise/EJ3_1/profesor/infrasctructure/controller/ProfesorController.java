@@ -32,16 +32,15 @@ public class ProfesorController {
         return profesorService.filterProfesorById(id);
     }
 
-    @GetMapping("/template/{id}")
+    //Feign call
+    @GetMapping("/rest_template/{id}")
     ResponseEntity<ProfesorOutputDTO> getProfesorRestTemplate(@PathVariable String id){
-        System.out.println("En client Resttemplate. Antes de llamada a server Profesor: "+id);
         ResponseEntity<ProfesorOutputDTO> rs = new RestTemplate().getForEntity("http://localhost:8081/profesor/"+id,ProfesorOutputDTO.class);
-        System.out.println("En client Resttemplate. Despues de llamada a server");
         return ResponseEntity.ok(rs.getBody());
     }
 
     @PutMapping("{id}")
-    public ProfesorOutputDTO modificarProfesor(@PathVariable String id, @RequestBody ProfesorInputDTO profesorInputDto) {
+    public ProfesorOutputDTO setProfesor(@PathVariable String id, @RequestBody ProfesorInputDTO profesorInputDto) {
 
         return profesorService.setProfesor(id, profesorInputDto);
     }
